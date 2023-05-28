@@ -2,11 +2,20 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { UserModel } from "../models/Users.js";
-import { authUser } from "../controllers/userController.js";
+import {
+  authUser,
+  registerUser,
+  logoutUser,
+  getUserProfile,
+  updateUserProfile,
+} from "../controllers/userController.js";
 
 const router = express.Router();
 
+router.post("/", registerUser);
 router.post("/auth", authUser);
+router.post("/logout", logoutUser);
+router.route("/profile").get(getUserProfile).put(updateUserProfile);
 
 export default router;
 
