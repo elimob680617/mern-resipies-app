@@ -1,12 +1,15 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import userRouter from "./routes/userRoutes.js";
 
 import dotenv from "dotenv";
 dotenv.config();
 const port = process.env.PORT || 5000;
+
+connectDB();
 
 const app = express();
 
