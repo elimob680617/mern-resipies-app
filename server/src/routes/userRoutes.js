@@ -1,12 +1,9 @@
 import express from "express";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import { UserModel } from "../models/Users.js";
 import {
   authUser,
-  registerUser,
-  logoutUser,
   getUserProfile,
+  logoutUser,
+  registerUser,
   updateUserProfile,
 } from "../controllers/userController.js";
 

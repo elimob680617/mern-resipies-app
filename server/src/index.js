@@ -1,8 +1,7 @@
-import express from "express";
 import cors from "cors";
-import mongoose from "mongoose";
+import express from "express";
 import connectDB from "./config/db.js";
-import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import userRouter from "./routes/userRoutes.js";
 
 import dotenv from "dotenv";
@@ -22,13 +21,10 @@ app.get("/", (req, res) => res.send("Server is ready"));
 // **PUT /api/user/profile** - Update profile
 
 app.use(express.json());
-app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+// app.use(cors());
 
 app.use("/api/users", userRouter);
-
-// mongoose.connect(
-//   "mongodb+srv://elhamobini:gq6FqASiwe4Pbbiy@recipes.ymkrhuc.mongodb.net/recipes?retryWrites=true&w=majority"
-// );
 
 app.use(notFound);
 app.use(errorHandler);
