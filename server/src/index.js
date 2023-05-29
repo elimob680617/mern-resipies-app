@@ -3,6 +3,7 @@ import express from "express";
 import connectDB from "./config/db.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import userRouter from "./routes/userRoutes.js";
+import cookieParser from "cookie-parser";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -23,6 +24,8 @@ app.get("/", (req, res) => res.send("Server is ready"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(cors());
+
+app.use(cookieParser());
 
 app.use("/api/users", userRouter);
 
