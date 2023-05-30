@@ -60,7 +60,6 @@ const logoutUser = asyncHandler(async (req, res) => {
   // destroying cookies
   res.cookie("jwt", "", {
     httpOnly: true,
-
     // expire cookie right away
     expires: new Date(0),
   });
@@ -72,7 +71,13 @@ const logoutUser = asyncHandler(async (req, res) => {
 // route GET /api/users/profile
 // @access private
 const getUserProfile = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "User profile" });
+  const user = {
+    _id: req.user._id,
+    name: req.user.name,
+    email: req.user.email,
+  };
+
+  res.status(200).json(user);
 });
 
 // @desc Update user profile
