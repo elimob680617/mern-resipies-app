@@ -84,7 +84,31 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // route PUT /api/users/profile
 // @access private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Update user profile" });
+  // I want to be able to update password
+  const user = await User.findById(req.user._id);
+
+  // check for that user
+  if (user) {
+    // if that name isn't include in the body then stay what it is
+    user.name = req.body.name || user.name;
+    // and for email as well
+    user.email = req.body.email || user.email;
+    // let's check for the password
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    // save the user with the new data but we want to get that new data to responde with it so put it in the variable
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
 export {
