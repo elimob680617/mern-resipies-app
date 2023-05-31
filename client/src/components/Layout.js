@@ -1,11 +1,15 @@
-import { Container, VStack } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
+import Header from "./Header";
 
 const Layout = () => {
   return (
-    <Container>
-      <Outlet />
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <Outlet />
+      </Container>
+    </>
   );
 };
 

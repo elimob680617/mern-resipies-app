@@ -1,13 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Auth, Home, NewRecipe, SavedRecipes } from "./pages";
-import Navbar from "./components/Navbar";
+
 import Layout from "./components/Layout";
 import Register from "./components/Register";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Navbar />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
