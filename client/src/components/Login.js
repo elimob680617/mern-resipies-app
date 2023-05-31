@@ -1,6 +1,5 @@
 import {
   Button,
-  Container,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -11,9 +10,9 @@ import {
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Formik, useFormik } from "formik";
-import * as Yup from "yup";
+import { useFormik } from "formik";
 import { Link } from "react-router-dom";
+import * as Yup from "yup";
 
 const Login = () => {
   const formBackground = useColorModeValue("gray.100", "gray.700");
