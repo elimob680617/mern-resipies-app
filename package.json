@@ -5,8 +5,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "node src/index.js",
-    "server": "nodemon src/index.js"
+    "start": "node server/src/index.js",
+    "server": "nodemon server/src/index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"yarn start\" \"yarn client\""
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -20,6 +22,7 @@
     "mongoose": "^7.1.1"
   },
   "devDependencies": {
+    "concurrently": "^8.0.1",
     "nodemon": "^2.0.22"
   }
 }
