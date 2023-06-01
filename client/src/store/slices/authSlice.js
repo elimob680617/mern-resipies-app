@@ -1,8 +1,8 @@
 // slices is where you can keep certain pieces of state as well as reducers that take in actions
 
-// authSlice is going to take the user data that we get back from our API and put it in localstorage and also put it in out auth state: ID ,Email, Name , not the token remember THE TOKEN is stored in httpOnly cookie , it'll also have the logout where it will destroy it from localstorage
-
 // there is two different kinds of slices: 1. there's one like this which is just local stuff, and 2. there's an API slice where it implements the Redux thunk middleware so that you can make asynchronous request
+
+// the local part of our state : authSlice is going to take the user data that we get back from our API and put it in localstorage and also put it in auth state: ID ,Email, Name , not the token remember THE TOKEN is stored in httpOnly cookie , it'll also have the logout where it will destroy it from localstorage
 
 import { createSlice } from "@reduxjs/toolkit";
 
