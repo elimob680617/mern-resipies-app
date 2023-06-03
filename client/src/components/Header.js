@@ -20,12 +20,31 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/food-recipe-logo.png";
 import ColorModeSwitch from "./ColorModeSwitch";
+import { useLogoutMutation } from "../store/slices/usersApiSlice";
+import { logout } from "../store/slices/authSlice";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // create a function to call the mutation
+  const [logoutApiCall] = useLogoutMutation();
+
+  const logoutHandler = async () => {
+    try {
+      // destroy the cookie and then gonna dispatch local logout clear localStorage
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const headerRef = useRef(null);
 
@@ -94,7 +113,7 @@ const Header = () => {
                           <Link to="/profile">Profile</Link>
                         </MenuItem>
                         <MenuItem>
-                          <Link>Logout</Link>
+                          <Link onClick={logoutHandler}>Logout</Link>
                         </MenuItem>
                       </MenuList>
                     </Menu>
