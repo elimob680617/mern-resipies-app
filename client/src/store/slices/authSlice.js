@@ -8,9 +8,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   // initial state is going to check localstorage
-  useInfo: localStorage.getItem("userInfo")
-    ? // if userInfo is there then we want to use that and we also want to parse it and we will turn it into an actual JavaScript object
-      JSON.parse(localStorage.getItem("userInfo"))
+
+  // if userInfo is there then we want to use that and we also want to parse it and we will turn it into an actual JavaScript object
+  userInfo: localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo"))
     : null,
 };
 
@@ -26,7 +27,7 @@ const authSlice = createSlice({
     // the action that we pass in is going to be the user data
     setCredentials: (state, action) => {
       // we are going to set user data (action : name , email, ID) to our userInfo state
-      state.useInfo = action.payload;
+      state.userInfo = action.payload;
       // then we want to save that also to localStorage and strigify it before we put it in!
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
     },
@@ -34,7 +35,7 @@ const authSlice = createSlice({
     // this is the front end logout to kill the localStorage
     logout: (state, action) => {
       // clearing it from our both state and localStorage
-      state.useInfo = null;
+      state.userInfo = null;
       // remove userInfo
       localStorage.removeItem("userInfo");
     },

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Button,
   FormControl,
@@ -11,10 +12,24 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+// to dispatch an action and to get data from the state
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
+import { useLoginMutation } from "../store/slices/usersApiSlice";
+// after we hit our backend we get our user data we then want to call that setCredential
+import { setCredentials } from "../store/slices/authSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // to get the function to call to fire off our mutation
+  const [login, { isLoading }] = useLoginMutation();
+
+  // to get user data
+  const { userInfo } = useSelector((state) => state.auth);
+
   const formBackground = useColorModeValue("gray.100", "gray.700");
 
   const formik = useFormik({
@@ -22,22 +37,34 @@ const Login = () => {
       email: "",
       password: "",
     },
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: (values) => handleSubmit(values),
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Must be a valid email")
         .required("Please enter an email"),
-      password: Yup.string()
-        .required("Please enter a password")
-        .min(8, "Password must be 8 characters long")
-        .matches(/[0-9]/, "Password requires a number")
-        .matches(/[a-z]/, "Password requires a lowercase letter")
-        .matches(/[A-Z]/, "Password requires an uppercase letter")
-        .matches(/[^\w]/, "Password requires a symbol"),
+      password: Yup.string().required("Please enter a password"),
     }),
   });
+
+  const handleSubmit = async (values) => {
+    try {
+      const res = await login({
+        email: values.email,
+        password: values.password,
+      }).unwrap();
+      dispatch(setCredentials({ ...res }));
+      navigate("/");
+    } catch (error) {
+      console.log(error?.data?.message || error.error);
+    }
+  };
+
+  // if there is userInfo >>> we're logged in >>> redirect to home page
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [userInfo, navigate]);
 
   return (
     <VStack h="100vh" alignItems="center" justifyContent="center">
@@ -51,7 +78,7 @@ const Login = () => {
       >
         <Heading>Login</Heading>
 
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} noValidate>
           <VStack spacing={4} width="100%">
             <FormControl
               isInvalid={!!formik.errors.email && formik.touched.email}
