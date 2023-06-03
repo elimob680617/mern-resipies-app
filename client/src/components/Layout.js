@@ -1,14 +1,9 @@
 import { Container } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
-import Header from "./Header";
 
-const Layout = () => {
+const Layout = ({ children }) => {
   return (
     <>
-      <Header />
-      <Container>
-        <Outlet />
-      </Container>
+      <Container>{children}</Container>
     </>
   );
 };

@@ -19,6 +19,7 @@ import * as Yup from "yup";
 import { useLoginMutation } from "../store/slices/usersApiSlice";
 // after we hit our backend we get our user data we then want to call that setCredential
 import { setCredentials } from "../store/slices/authSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ const Login = () => {
       dispatch(setCredentials({ ...res }));
       navigate("/");
     } catch (error) {
-      console.log(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error);
     }
   };
 

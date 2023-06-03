@@ -1,22 +1,19 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Auth, Home, NewRecipe, SavedRecipes } from "./pages";
+import { Outlet } from "react-router-dom";
 
+import Header from "./components/Header";
 import Layout from "./components/Layout";
-import Register from "./components/Register";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/new-recipe" element={<NewRecipe />} />
-          <Route path="/saved-recipe" element={<SavedRecipes />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <>
+      <Header />
+      <ToastContainer />
+      <Layout>
+        <Outlet />
+      </Layout>
+    </>
   );
 };
 
