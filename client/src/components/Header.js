@@ -1,12 +1,14 @@
 import {
   AddIcon,
   ArrowForwardIcon,
+  ChevronDownIcon,
   CopyIcon,
   HamburgerIcon,
   StarIcon,
 } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   HStack,
   IconButton,
   Image,
@@ -17,11 +19,14 @@ import {
   Show,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../assets/food-recipe-logo.png";
 import ColorModeSwitch from "./ColorModeSwitch";
 
 const Header = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+
   const headerRef = useRef(null);
 
   useEffect(() => {
@@ -79,7 +84,24 @@ const Header = () => {
                   <Link to="/">Home</Link>
                   <Link to="/new-recipe">New Recipe</Link>
                   <Link to="/saved-recipe">Saved Recipe</Link>
-                  <Link to="/auth">Login/Register</Link>
+                  {userInfo ? (
+                    <Menu>
+                      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                        {userInfo?.name}
+                      </MenuButton>
+                      <MenuList>
+                        <MenuItem>
+                          <Link to="/profile">Profile</Link>
+                        </MenuItem>
+                        <MenuItem>
+                          <Link>Logout</Link>
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  ) : (
+                    <Link to="/auth">Login/Register</Link>
+                  )}
+
                   <ColorModeSwitch />
                 </HStack>
               </Show>
