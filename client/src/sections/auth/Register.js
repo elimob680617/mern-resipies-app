@@ -15,10 +15,10 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRegisteMutation } from "../store/slices/usersApiSlice";
-import { setCredentials } from "../store/slices/authSlice";
+import { useRegisteMutation } from "../../store/slices/usersApiSlice";
+import { setCredentials } from "../../store/slices/authSlice";
 import { toast } from "react-toastify";
-import Loader from "./Loader";
+import Loader from "../../components/Loader";
 
 const Register = () => {
   const formBackground = useColorModeValue("gray.100", "gray.700");

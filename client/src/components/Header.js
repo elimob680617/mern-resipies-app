@@ -104,21 +104,24 @@ const Header = () => {
                   <Link to="/new-recipe">New Recipe</Link>
                   <Link to="/saved-recipe">Saved Recipe</Link>
                   {userInfo ? (
-                    <Menu>
-                      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                        {userInfo?.name}
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem>
-                          <Link to="/profile">Profile</Link>
-                        </MenuItem>
-                        <MenuItem>
-                          <Link onClick={logoutHandler}>Logout</Link>
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
+                    <Box>
+                      <Menu>
+                        <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                          {userInfo?.name}
+                        </MenuButton>
+                        <MenuList>
+                          <Link to="/profile">
+                            <MenuItem>Profile</MenuItem>
+                          </Link>
+
+                          <Link onClick={logoutHandler}>
+                            <MenuItem>Logout</MenuItem>
+                          </Link>
+                        </MenuList>
+                      </Menu>
+                    </Box>
                   ) : (
-                    <Link to="/auth">Login/Register</Link>
+                    <Link to="/login">Login/Register</Link>
                   )}
 
                   <ColorModeSwitch />
@@ -126,31 +129,35 @@ const Header = () => {
               </Show>
 
               <Show below="lg">
-                <Menu>
-                  <MenuButton
-                    as={IconButton}
-                    aria-label="Options"
-                    icon={<HamburgerIcon />}
-                    variant="outline"
-                    color="brand.100"
-                  />
-                  <MenuList>
-                    <MenuItem icon={<StarIcon />}>
-                      <Link to="/">Home</Link>
-                    </MenuItem>
-                    <MenuItem icon={<AddIcon />}>
-                      <Link to="/new-recipe">New Recipe</Link>
-                    </MenuItem>
+                <Box>
+                  <Menu>
+                    <MenuButton
+                      as={IconButton}
+                      aria-label="Options"
+                      icon={<HamburgerIcon />}
+                      variant="outline"
+                      color="brand.100"
+                    />
+                    <MenuList>
+                      <Link to="/">
+                        <MenuItem icon={<StarIcon />}>Home</MenuItem>
+                      </Link>
+                      <Link to="/new-recipe">
+                        <MenuItem icon={<AddIcon />}>New Recipe</MenuItem>
+                      </Link>
 
-                    <MenuItem icon={<CopyIcon />}>
-                      <Link to="/saved-recipe">Saved Recipe</Link>
-                    </MenuItem>
+                      <Link to="/saved-recipe">
+                        <MenuItem icon={<CopyIcon />}>Saved Recipe</MenuItem>
+                      </Link>
 
-                    <MenuItem icon={<ArrowForwardIcon />}>
-                      <Link to="/auth">Login/Register</Link>
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
+                      <Link to="/auth">
+                        <MenuItem icon={<ArrowForwardIcon />}>
+                          Login/Register
+                        </MenuItem>
+                      </Link>
+                    </MenuList>
+                  </Menu>
+                </Box>
               </Show>
             </HStack>
           </nav>

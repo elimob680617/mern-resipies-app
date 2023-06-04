@@ -16,11 +16,11 @@ import { Link, useNavigate } from "react-router-dom";
 // to dispatch an action and to get data from the state
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import { useLoginMutation } from "../store/slices/usersApiSlice";
+import { useLoginMutation } from "../../store/slices/usersApiSlice";
 // after we hit our backend we get our user data we then want to call that setCredential
-import { setCredentials } from "../store/slices/authSlice";
+import { setCredentials } from "../../store/slices/authSlice";
 import { toast } from "react-toastify";
-import Loader from "./Loader";
+import Loader from "../../components/Loader";
 
 const Login = () => {
   const navigate = useNavigate();

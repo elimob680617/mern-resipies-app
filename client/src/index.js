@@ -10,16 +10,29 @@ import {
 } from "react-router-dom";
 import App from "./App";
 import "./index.css";
-import { Auth, Home, NewRecipe, Register, SavedRecipes } from "./pages";
+import {
+  Home,
+  Login,
+  NewRecipe,
+  Profile,
+  Register,
+  SavedRecipes,
+} from "./sections/index";
 import store from "./store";
 import theme from "./theme";
+import PrivateRoute from "./components/PrivateRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<App />}>
-      <Route index={true} path="/" element={<Home />} />
-      <Route path="/auth" element={<Auth />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/Login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      {/* Private Route */}
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="/profile" element={<Profile />} />
+      </Route>
+
       <Route path="/new-recipe" element={<NewRecipe />} />
       <Route path="/saved-recipe" element={<SavedRecipes />} />
     </Route>
