@@ -11,11 +11,26 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRegisteMutation } from "../store/slices/usersApiSlice";
+import { setCredentials } from "../store/slices/authSlice";
+import { toast } from "react-toastify";
+import Loader from "./Loader";
 
 const Register = () => {
   const formBackground = useColorModeValue("gray.100", "gray.700");
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // to get the function to call to fire off our mutation
+  const [register, { isLoading }] = useRegisteMutation();
+
+  // to get user data
+  const { userInfo } = useSelector((state) => state.auth);
 
   const formik = useFormik({
     initialValues: {
@@ -24,9 +39,7 @@ const Register = () => {
       password: "",
       confirmPassword: "",
     },
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: (values) => handleSubmit(values),
     validationSchema: Yup.object({
       name: Yup.string().required("Please enter your name"),
       email: Yup.string()
@@ -47,6 +60,30 @@ const Register = () => {
         ),
     }),
   });
+
+  const handleSubmit = async (values) => {
+    if (values.password !== values.confirmPassword) {
+      toast.error("Password do not match");
+    } else {
+      try {
+        const res = await register({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        navigate("/");
+      } catch (error) {
+        toast.error(error?.data?.message || error.error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [userInfo, navigate]);
 
   return (
     <VStack h="100vh" alignItems="center" justifyContent="center">
@@ -119,6 +156,7 @@ const Register = () => {
                 {formik.errors.confirmPassword}
               </FormErrorMessage>
             </FormControl>
+            {isLoading && <Loader />}
             <Button type="submit" colorScheme="orange" width="full">
               Register
             </Button>
