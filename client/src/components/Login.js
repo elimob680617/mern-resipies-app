@@ -20,6 +20,7 @@ import { useLoginMutation } from "../store/slices/usersApiSlice";
 // after we hit our backend we get our user data we then want to call that setCredential
 import { setCredentials } from "../store/slices/authSlice";
 import { toast } from "react-toastify";
+import Loader from "./Loader";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -107,6 +108,7 @@ const Login = () => {
               />
               <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
             </FormControl>
+            {isLoading && <Loader />}
             <Button type="submit" colorScheme="orange" width="full">
               Login
             </Button>
