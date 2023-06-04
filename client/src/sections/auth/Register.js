@@ -15,7 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRegisteMutation } from "../../store/slices/usersApiSlice";
+import { useRegisterMutation } from "../../store/slices/usersApiSlice";
 import { setCredentials } from "../../store/slices/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
@@ -27,7 +27,7 @@ const Register = () => {
   const dispatch = useDispatch();
 
   // to get the function to call to fire off our mutation
-  const [register, { isLoading }] = useRegisteMutation();
+  const [register, { isLoading }] = useRegisterMutation();
 
   // to get user data
   const { userInfo } = useSelector((state) => state.auth);
