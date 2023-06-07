@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import userRouter from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
+import recipesRouter from "./routes/recipesRoutes.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -28,6 +29,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api/users", userRouter);
+
+// **POST /api/recipes/create** - LCreate Recipe
+// **GET /api/recipes** - Get Recipes
+
+app.use("/api/recipes", recipesRouter);
 
 app.use(notFound);
 app.use(errorHandler);
