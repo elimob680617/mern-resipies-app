@@ -12,7 +12,7 @@ import {
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useFormik } from "formik";
+import { Field, Formik, useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 // to dispatch an action and to get data from the state
 import { useDispatch, useSelector } from "react-redux";
