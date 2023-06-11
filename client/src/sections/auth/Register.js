@@ -1,5 +1,6 @@
 import {
   Button,
+  Container,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -19,6 +20,7 @@ import { useRegisterMutation } from "../../store/slices/usersApiSlice";
 import { setCredentials } from "../../store/slices/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 const Register = () => {
   const formBackground = useColorModeValue("gray.100", "gray.700");
@@ -86,88 +88,95 @@ const Register = () => {
   }, [userInfo, navigate]);
 
   return (
-    <VStack h="100vh" alignItems="center" justifyContent="center">
-      <VStack
-        p={8}
-        bg={formBackground}
-        borderRadius={8}
-        boxShadow="lg"
-        alignItems="flex-start"
-        width="100%"
-      >
-        <Heading>Register</Heading>
+    <Container>
+      <VStack h="100vh" alignItems="start" justifyContent="center">
+        <ArrowBackIcon
+          boxSize={6}
+          colorScheme="orange"
+          onClick={() => navigate("/")}
+        />
+        <VStack
+          p={8}
+          bg={formBackground}
+          borderRadius={8}
+          boxShadow="lg"
+          alignItems="flex-start"
+          width="100%"
+        >
+          <Heading>Register</Heading>
 
-        <form onSubmit={formik.handleSubmit}>
-          <VStack spacing={4} width="100%">
-            <FormControl
-              isInvalid={!!formik.errors.name && formik.touched.name}
-              {...formik.getFieldProps("name")}
-            >
-              <FormLabel htmlFor="name">Name: </FormLabel>
-              <Input
-                type="name"
-                id="name"
-                name="name"
-                placeholder="enter name"
-              />
-              <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
-            </FormControl>
-            <FormControl
-              isInvalid={!!formik.errors.email && formik.touched.email}
-              {...formik.getFieldProps("email")}
-            >
-              <FormLabel htmlFor="email">Email: </FormLabel>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="enter email"
-              />
-              <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-            </FormControl>
-            <FormControl
-              isInvalid={!!formik.errors.password && formik.touched.password}
-              {...formik.getFieldProps("password")}
-            >
-              <FormLabel htmlFor="password">Password: </FormLabel>
-              <Input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="enter password"
-              />
-              <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
-            </FormControl>
-            <FormControl
-              isInvalid={
-                !!formik.errors.confirmPassword &&
-                formik.touched.confirmPassword
-              }
-              {...formik.getFieldProps("confirmPassword")}
-            >
-              <FormLabel htmlFor="password">Confirm Password: </FormLabel>
-              <Input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="enter confirm password"
-              />
-              <FormErrorMessage>
-                {formik.errors.confirmPassword}
-              </FormErrorMessage>
-            </FormControl>
-            {isLoading && <Loader />}
-            <Button type="submit" colorScheme="orange" width="full">
-              Register
-            </Button>
-            <HStack alignItems="baseline">
-              <Text fontSize="xs">Already have an Account?</Text>
-              <Link to="/auth">Login</Link>
-            </HStack>
-          </VStack>
-        </form>
+          <form onSubmit={formik.handleSubmit}>
+            <VStack spacing={4} width="100%">
+              <FormControl
+                isInvalid={!!formik.errors.name && formik.touched.name}
+                {...formik.getFieldProps("name")}
+              >
+                <FormLabel htmlFor="name">Name: </FormLabel>
+                <Input
+                  type="name"
+                  id="name"
+                  name="name"
+                  placeholder="enter name"
+                />
+                <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
+              </FormControl>
+              <FormControl
+                isInvalid={!!formik.errors.email && formik.touched.email}
+                {...formik.getFieldProps("email")}
+              >
+                <FormLabel htmlFor="email">Email: </FormLabel>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="enter email"
+                />
+                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+              </FormControl>
+              <FormControl
+                isInvalid={!!formik.errors.password && formik.touched.password}
+                {...formik.getFieldProps("password")}
+              >
+                <FormLabel htmlFor="password">Password: </FormLabel>
+                <Input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="enter password"
+                />
+                <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+              </FormControl>
+              <FormControl
+                isInvalid={
+                  !!formik.errors.confirmPassword &&
+                  formik.touched.confirmPassword
+                }
+                {...formik.getFieldProps("confirmPassword")}
+              >
+                <FormLabel htmlFor="password">Confirm Password: </FormLabel>
+                <Input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="enter confirm password"
+                />
+                <FormErrorMessage>
+                  {formik.errors.confirmPassword}
+                </FormErrorMessage>
+              </FormControl>
+              {isLoading && <Loader />}
+              <Button type="submit" colorScheme="orange" width="full">
+                Register
+              </Button>
+              <HStack alignItems="baseline">
+                <Text fontSize="xs">Already have an Account?</Text>
+                <Link to="/login">Login</Link>
+              </HStack>
+            </VStack>
+          </form>
+        </VStack>
       </VStack>
-    </VStack>
+    </Container>
   );
 };
 

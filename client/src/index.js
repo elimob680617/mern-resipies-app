@@ -9,33 +9,36 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import App from "./App";
+import PrivateRoute from "./components/PrivateRoute";
 import "./index.css";
 import {
   Home,
   Login,
-  NewRecipe,
   Profile,
   Register,
   SavedRecipes,
+  CreateRecipe,
 } from "./sections/index";
 import store from "./store";
 import theme from "./theme";
-import PrivateRoute from "./components/PrivateRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route element={<App />}>
-      <Route path="/" element={<Home />} />
-      <Route path="/Login" element={<Login />} />
+    <>
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      {/* Private Route */}
-      <Route path="" element={<PrivateRoute />}>
-        <Route path="/profile" element={<Profile />} />
-      </Route>
+      <Route element={<App />}>
+        <Route path="/" element={<Home />} />
 
-      <Route path="/new-recipe" element={<NewRecipe />} />
-      <Route path="/saved-recipe" element={<SavedRecipes />} />
-    </Route>
+        {/* Private Route */}
+        <Route path="" element={<PrivateRoute />}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+
+        <Route path="/create-recipe" element={<CreateRecipe />} />
+        <Route path="/saved-recipe" element={<SavedRecipes />} />
+      </Route>
+    </>
   )
 );
 

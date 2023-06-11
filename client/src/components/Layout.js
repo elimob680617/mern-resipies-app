@@ -3,7 +3,7 @@ import { Container } from "@chakra-ui/react";
 const Layout = ({ children }) => {
   return (
     <>
-      <Container>{children}</Container>
+      <Container maxW="container.lg">{children}</Container>
     </>
   );
 };

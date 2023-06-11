@@ -101,7 +101,7 @@ const Header = () => {
               <Show above="lg">
                 <HStack spacing={8}>
                   <Link to="/">Home</Link>
-                  <Link to="/new-recipe">New Recipe</Link>
+                  <Link to="/create-recipe">New Recipe</Link>
                   <Link to="/saved-recipe">Saved Recipe</Link>
                   {userInfo ? (
                     <Box>
