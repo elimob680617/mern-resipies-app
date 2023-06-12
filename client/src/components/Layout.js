@@ -3,7 +3,9 @@ import { Container } from "@chakra-ui/react";
 const Layout = ({ children }) => {
   return (
     <>
-      <Container maxW="container.lg">{children}</Container>
+      <Container h="100vh" maxW="container.lg">
+        {children}
+      </Container>
     </>
   );
 };
