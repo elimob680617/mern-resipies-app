@@ -61,8 +61,8 @@ const CreateRecipe = () => {
         cookingTime: values.cookingTime,
         userOwner: userInfo._id,
       });
-      alert("Recipe Created");
-      // navigate("/");
+
+      navigate("/");
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }
