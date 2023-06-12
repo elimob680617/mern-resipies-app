@@ -19,7 +19,7 @@ const getRecipes = asyncHandler(async (req, res) => {
 // route POST /api/recipes/create
 // @access public
 const createRecipe = asyncHandler(async (req, res) => {
-  const { name, ingredients, instructions, imageUrl, cookieTime, userOwner } =
+  const { name, ingredients, instructions, imageUrl, cookingTime, userOwner } =
     req.body;
 
   const recipe = await Recipe.create({
@@ -27,7 +27,7 @@ const createRecipe = asyncHandler(async (req, res) => {
     ingredients,
     instructions,
     imageUrl,
-    cookieTime,
+    cookingTime,
     userOwner,
   });
   if (recipe) {
@@ -37,7 +37,7 @@ const createRecipe = asyncHandler(async (req, res) => {
       ingredients: recipe.ingredients,
       instructions: recipe.instructions,
       imageUrl: recipe.imageUrl,
-      cookieTime: recipe.cookieTime,
+      cookingTime: recipe.cookingTime,
       userOwner: recipe.userOwner,
     });
   } else {

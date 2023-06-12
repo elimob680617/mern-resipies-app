@@ -1,24 +1,7 @@
-// import {
-//   Button,
-//   FormControl,
-//   FormErrorMessage,
-//   FormLabel,
-//   HStack,
-//   Heading,
-//   Input,
-//   Stack,
-//   Text,
-//   Textarea,
-//   VStack,
-//   useColorModeValue,
-// } from "@chakra-ui/react";
-// import { Field, FieldArray, Formik, useFormik } from ";
-// import { Link } from "react-router-dom";
 import * as Yup from "yup";
 
 import {
   Button,
-  Container,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -30,25 +13,34 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
+import { useCreateRecipeMutation } from "../../store/slices/recipesApiSlice";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const CreateRecipe = () => {
+  const navigate = useNavigate();
+
+  // to get user data
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const [create, { isLoading }] = useCreateRecipeMutation();
+
   const formBackground = useColorModeValue("gray.100", "gray.700");
   const initialValues = {
     name: "",
-    ingredients: [{ name: "" }],
+    ingredients: [""],
     instructions: "",
     imageUrl: "",
     cookingTime: 0,
-    userOwner: 0,
+    userOwner: userInfo._id,
   };
-  const onSubmit = (values) => console.log(values);
+  const onSubmit = (values) => handleSubmit(values);
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Please enter an Name"),
 
     ingredients: Yup.array().of(
-      Yup.object().shape({
-        name: Yup.string().required("Please enter an Ingredient"),
-      })
+      Yup.string().required("Please enter an Ingredient")
     ),
 
     instructions: Yup.string().required("Please enter Instructions"),
@@ -58,6 +50,23 @@ const CreateRecipe = () => {
       .positive("Cooking Time must be greater than zero")
       .required("Please enter Cooking Time"),
   });
+
+  const handleSubmit = async (values) => {
+    try {
+      await create({
+        name: values.name,
+        ingredients: values.ingredients,
+        instructions: values.instructions,
+        imageUrl: values.imageUrl,
+        cookingTime: values.cookingTime,
+        userOwner: userInfo._id,
+      });
+      alert("Recipe Created");
+      // navigate("/");
+    } catch (error) {
+      toast.error(error?.data?.message || error.error);
+    }
+  };
 
   return (
     <VStack
@@ -101,7 +110,7 @@ const CreateRecipe = () => {
                     {values.ingredients.map((ingredient, index) => (
                       <FormControl
                         key={index}
-                        {...getFieldProps(`ingredients.${index}.name`)}
+                        {...getFieldProps(`ingredients.${index}`)}
                         isInvalid={!!errors.ingredients && touched.ingredients}
                       >
                         <FormLabel htmlFor="ingredients">
@@ -110,8 +119,8 @@ const CreateRecipe = () => {
                         <HStack>
                           <Field
                             as={Input}
-                            name={`ingredients.${index}.name`}
-                            id={`ingredients.${index}.name`}
+                            name={`ingredients.${index}`}
+                            id={`ingredients.${index}`}
                           />
                           {index > 0 && (
                             <Button
@@ -127,7 +136,7 @@ const CreateRecipe = () => {
                         </HStack>
                         <ErrorMessage
                           component={FormErrorMessage}
-                          name={`ingredients.${index}.name`}
+                          name={`ingredients.${index}`}
                         />
                       </FormControl>
                     ))}
@@ -137,9 +146,7 @@ const CreateRecipe = () => {
                       size="sm"
                       colorScheme="teal"
                       variant="solid"
-                      onClick={() =>
-                        insert(values.ingredients.length + 1, { name: "" })
-                      }
+                      onClick={() => insert(values.ingredients.length + 1)}
                     >
                       Add Ingredients
                     </Button>
@@ -173,12 +180,10 @@ const CreateRecipe = () => {
                 isInvalid={!!errors.cookingTime && touched.cookingTime}
                 {...getFieldProps("cookingTime")}
               >
-                <FormLabel htmlFor="cookingTime">
-                  Cooking Time (min):{" "}
-                </FormLabel>
+                <FormLabel htmlFor="cookingTime">Cooking Time (min):</FormLabel>
                 <Field
                   as={Input}
-                  type="text"
+                  type="number"
                   id="cookingTime"
                   name="cookingTime"
                   placeholder="enter cooking time"

@@ -11,7 +11,7 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
   baseQuery,
   // sometimes you have like blog post and stuff where you don't  want to make a fetch every single time , you want to cache them and use that data >>> user , products, blog post
-  tagTypes: ["User"],
+  tagTypes: ["User", "Recipes"],
 
   // a built-in Builder to make our request when we make our request it won't be from this file you can think of this is like a parent to any other api slices
   endpoints: (builder) => ({}),

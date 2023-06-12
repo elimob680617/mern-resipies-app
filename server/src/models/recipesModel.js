@@ -8,7 +8,7 @@ const recipeSchema = new mongoose.Schema({
   ingredients: [{ type: String, required: true }],
   instructions: { type: String, required: true },
   imageUrl: { type: String, required: true },
-  cookieTime: { type: Number, required: true },
+  cookingTime: { type: Number, required: true },
   // reference between a recipe and who create a recipe , to keep track who create the recipe
   userOwner: {
     type: mongoose.Schema.Types.ObjectId,
