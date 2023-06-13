@@ -63,6 +63,7 @@ const CreateRecipe = () => {
       });
 
       navigate("/");
+      toast.success("Profile Updated");
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }

@@ -18,4 +18,8 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateRecipeMutation, useGetRecipesQuery } = recipesApiSlice;
+export const {
+  useCreateRecipeMutation,
+  useGetRecipesQuery,
+  useLazyGetRecipesQuery,
+} = recipesApiSlice;
